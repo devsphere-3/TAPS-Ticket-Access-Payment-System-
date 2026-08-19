@@ -1,4 +1,4 @@
-# PRD — Sistem Pembelian dan Validasi Tiket Online
+# PRD — Sistem Pembelian dan Validasi Tiket Online (TAPS)
 
 **Versi:** 1.0 Final  
 **Status:** Development  
