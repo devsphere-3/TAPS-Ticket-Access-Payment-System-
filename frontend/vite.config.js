@@ -1,13 +1,19 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import basicSsl from '@vitejs/plugin-basic-ssl'
 
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    // HTTPS self-signed — agar kamera (getUserMedia) bisa jalan di IP lokal
+    basicSsl(),
   ],
   server: {
+    // Expose ke jaringan lokal agar bisa diakses via IP dari HP/device lain
+    host: '0.0.0.0',
+    https: true,
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
