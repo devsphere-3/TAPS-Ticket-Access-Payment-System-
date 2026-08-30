@@ -23,8 +23,15 @@ Route::get('/ticket-categories', [TicketCategoryController::class, 'index']);
 Route::post('/orders', [OrderController::class, 'store']);
 Route::get('/orders/{orderNumber}', [OrderController::class, 'show']);
 
-// Demo Payment
-Route::post('/payment/demo', [PaymentController::class, 'demo']);
+// Payment — buat invoice & redirect ke halaman pembayaran
+Route::post('/payment/checkout', [PaymentController::class, 'checkout']);
+
+// Payment — polling status (fallback selain webhook)
+Route::get('/payment/status/{orderNumber}', [PaymentController::class, 'status']);
+
+// Webhook Payment Gateway — TIDAK pakai auth, diakses server payment gateway
+// Daftarkan URL ini di dashboard: Settings > Webhook URL
+Route::post('/payment/webhook', [PaymentController::class, 'webhook']);
 
 // Ticket detail
 Route::get('/tickets/{ticketUuid}', [TicketController::class, 'show']);

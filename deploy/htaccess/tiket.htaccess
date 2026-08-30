@@ -1,0 +1,31 @@
+# File ini diletakkan sebagai: public_html/tiket/.htaccess
+# Handle SPA React routing — semua path fallback ke index.html
+#
+# Struktur cPanel yang diharapkan:
+#   public_html/
+#   └── tiket/          <-- isi dengan hasil build: dist/*
+#       ├── .htaccess   <-- file ini
+#       ├── index.html
+#       └── assets/
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /tiket/
+
+    # Jangan rewrite file/folder yang memang ada (assets, favicon, dll)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Semua route SPA fallback ke index.html
+    RewriteRule ^ index.html [L]
+</IfModule>
+
+# Cache static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css             "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/webp           "access plus 1 year"
+    ExpiresByType image/svg+xml        "access plus 1 year"
+    ExpiresByType image/x-icon         "access plus 1 year"
+</IfModule>

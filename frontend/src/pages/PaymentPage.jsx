@@ -26,9 +26,8 @@ export default function PaymentPage() {
     setPaying(true)
     setError(null)
     try {
-      const { data } = await api.post('/payment/demo', { order_number: orderNumber })
-      const firstUuid = data.tickets?.[0]?.ticket_uuid
-      navigate(`/payment-success/${orderNumber}`, { state: { tickets: data.tickets, firstUuid } })
+      const { data } = await api.post('/payment/checkout', { order_number: orderNumber })
+      window.location.href = data.invoice_url
     } catch (err) {
       setError(err.response?.data?.message ?? 'Pembayaran gagal.')
     } finally {
@@ -72,7 +71,7 @@ export default function PaymentPage() {
             </span>
           </div>
 
-          <h2 className="text-xl font-bold text-center text-gray-800 mb-6">PEMBAYARAN DEMO</h2>
+          <h2 className="text-xl font-bold text-center text-gray-800 mb-6">PEMBAYARAN EVENT</h2>
 
           <div className="space-y-3 text-sm mb-6">
             <div className="flex justify-between py-2 border-b border-gray-100">
@@ -118,7 +117,7 @@ export default function PaymentPage() {
           </button>
 
           <p className="text-xs text-center text-gray-400 mt-4">
-            Ini adalah Demo Payment untuk keperluan pengujian.
+            Anda akan diarahkan ke halaman pembayaran yang aman.
           </p>
         </div>
       </div>

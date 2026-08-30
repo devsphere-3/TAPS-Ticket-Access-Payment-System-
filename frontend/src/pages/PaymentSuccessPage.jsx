@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import api from '../lib/axios'
 
 export default function PaymentSuccessPage() {
-  const { orderNumber } = useParams()
   const navigate = useNavigate()
   const { state } = useLocation()
+  const [searchParams] = useSearchParams()
+  const orderNumber = searchParams.get('order')
 
   const [order, setOrder] = useState(null)
   const tickets = state?.tickets ?? []

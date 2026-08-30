@@ -36,7 +36,7 @@ export default function App() {
         <Route path="/"                          element={<HomePage />} />
         <Route path="/checkout"                  element={<CheckoutPage />} />
         <Route path="/payment/:orderNumber"      element={<PaymentPage />} />
-        <Route path="/payment-success/:orderNumber" element={<PaymentSuccessPage />} />
+        <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/ticket/:ticketUuid"        element={<ETicketPage />} />
         <Route path="/ticket-lookup"             element={<TicketLookupPage />} />
 

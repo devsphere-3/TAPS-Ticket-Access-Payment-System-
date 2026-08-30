@@ -12,7 +12,27 @@ class CustomerController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        $query = Order::with(['tickets.attendance', 'orderItems'])
+        $query = Order::select([
+                'id',
+                'order_number',
+                'customer_name',
+                'customer_phone',
+                'total_amount',
+                'payment_status',
+                'paid_at',
+                'created_at',
+            ])
+            ->with([
+                'tickets' => function ($query) {
+                    $query->select(['id', 'order_id', 'ticket_uuid'])
+                        ->with(['attendance' => function ($attendanceQuery) {
+                            $attendanceQuery->select(['id', 'ticket_id', 'status', 'checked_in_at']);
+                        }]);
+                },
+                'orderItems' => function ($query) {
+                    $query->select(['id', 'order_id', 'ticket_category_name', 'quantity']);
+                },
+            ])
             ->orderByDesc('created_at');
 
         if ($request->filled('payment_status')) {

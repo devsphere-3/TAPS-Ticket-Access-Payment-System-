@@ -68,7 +68,19 @@ class OrderController extends Controller
     // Public: detail order by order number
     public function show(string $orderNumber): JsonResponse
     {
-        $order = Order::with('orderItems')
+        $order = Order::select([
+                'id',
+                'order_number',
+                'customer_name',
+                'customer_phone',
+                'total_amount',
+                'payment_status',
+                'paid_at',
+                'created_at',
+            ])
+            ->with(['orderItems' => function ($query) {
+                $query->select(['id', 'order_id', 'ticket_category_name', 'unit_price', 'quantity', 'subtotal']);
+            }])
             ->where('order_number', $orderNumber)
             ->firstOrFail();
 
@@ -91,7 +103,20 @@ class OrderController extends Controller
     // Admin: daftar semua order
     public function adminIndex(Request $request): JsonResponse
     {
-        $query = Order::with('orderItems')->orderByDesc('created_at');
+        $query = Order::select([
+                'id',
+                'order_number',
+                'customer_name',
+                'customer_phone',
+                'total_amount',
+                'payment_status',
+                'paid_at',
+                'created_at',
+            ])
+            ->with(['orderItems' => function ($query) {
+                $query->select(['id', 'order_id', 'ticket_category_name', 'unit_price', 'quantity', 'subtotal']);
+            }])
+            ->orderByDesc('created_at');
 
         if ($request->filled('payment_status')) {
             $query->where('payment_status', $request->payment_status);

@@ -1,0 +1,17 @@
+# File ini diletakkan sebagai: public_html/tiket-api/.htaccess
+# Meneruskan semua request ke Laravel public/index.php
+# yang berada di: tiket-api-core/public/index.php
+#
+# Struktur cPanel yang diharapkan:
+#   public_html/
+#   ├── tiket-api/          <-- folder ini, berisi .htaccess ini
+#   └── tiket-api-core/     <-- Laravel app (semua file backend)
+#       └── public/
+#           └── index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Arahkan DOCUMENT_ROOT ke Laravel public folder
+    RewriteRule ^(.*)$ ../tiket-api-core/public/$1 [L]
+</IfModule>

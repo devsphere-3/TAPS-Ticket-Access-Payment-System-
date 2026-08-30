@@ -7,10 +7,10 @@ use App\Models\Order;
 interface PaymentServiceInterface
 {
     /**
-     * Proses pembayaran untuk order tertentu.
-     * Mengembalikan true jika berhasil.
+     * Buat invoice/transaksi pembayaran untuk order tertentu.
+     * Mengembalikan URL redirect ke halaman pembayaran.
      */
-    public function pay(Order $order): bool;
+    public function createInvoice(Order $order): string;
 
     /**
      * Nama metode pembayaran yang digunakan.

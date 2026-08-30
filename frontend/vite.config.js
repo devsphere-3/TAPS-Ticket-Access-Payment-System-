@@ -1,18 +1,22 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import basicSsl from '@vitejs/plugin-basic-ssl'
+import mkcert from 'vite-plugin-mkcert'
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  // base path subfolder — production build akan pakai /tiket/
+  // dev mode tetap pakai '/' agar proxy & hot reload normal
+  base: command === 'build' ? '/tiket/' : '/',
+
   plugins: [
     react(),
     tailwindcss(),
-    // HTTPS self-signed — agar kamera (getUserMedia) bisa jalan di IP lokal
-    basicSsl(),
+    mkcert(),
   ],
   server: {
-    // Expose ke jaringan lokal agar bisa diakses via IP dari HP/device lain
     host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
     https: true,
     proxy: {
       '/api': {
@@ -37,4 +41,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))

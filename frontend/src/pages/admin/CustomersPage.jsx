@@ -24,8 +24,8 @@ function buildWhatsAppLink(phone, customerName, orderNumber, ticketUuids, appUrl
   ).join('\n')
 
   const message =
-    `Halo ${customerName}! 👋\n\n` +
-    `Berikut e-ticket Anda untuk order *${orderNumber}*:\n\n` +
+    `Halooo ${customerName}! 👋\n\n` +
+    `Berikut E-ticket andaa  *${orderNumber}*:\n\n` +
     `${ticketLines}\n\n` +
     `Tunjukkan QR Code pada tiket saat memasuki area event.\n` +
     `Terima kasih! 🎟️`
